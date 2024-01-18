@@ -1,0 +1,28 @@
+# Fichiers de logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Répertoire pour les fichiers de build
+dist
+
+# Fichiers de configuration de l'environnement
+.env
+
+# Fichiers de débogage de Node.js
+npm-debug.log
+node_modules/
+
+# Fichiers de l'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
