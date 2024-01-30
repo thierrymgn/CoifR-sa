@@ -37,7 +37,7 @@ type SalonItem struct {
 	Email       string `json:"email"`
 	Address     string `json:"address"`
 	City        string `json:"city"`
-	Cp          string `json:"cp"`
+	PosalCode   string `json:"postal_code"`
 	Description string `json:"description"`
 	UserId      int64  `json:"user_id"`
 }

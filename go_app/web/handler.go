@@ -20,7 +20,7 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Delete("/users/{id}", handler.DeleteUser())
 	handler.Get("/users/username/{username}", handler.GetUserByUsername())
 	handler.Get("/users/email/{email}", handler.GetUserByEmail())
-	handler.Post("/salon", handler.CreateSalon())
+	handler.Post("/salons", handler.CreateSalon())
 
 	return handler
 
