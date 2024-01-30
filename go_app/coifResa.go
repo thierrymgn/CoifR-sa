@@ -30,3 +30,18 @@ type UserStoreInterface interface {
 	UpdateUser(user *UserItem) error
 	DeleteUser(id int64) error
 }
+
+type SalonItem struct {
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	Address     string `json:"address"`
+	City        string `json:"city"`
+	Cp          string `json:"cp"`
+	Description string `json:"description"`
+	UserId      int64  `json:"user_id"`
+}
+
+type SalonStoreInterface interface {
+	CreateSalon(salon *SalonItem) error
+}

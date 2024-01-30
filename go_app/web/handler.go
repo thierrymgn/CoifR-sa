@@ -14,13 +14,13 @@ func NewHandler(store *database.Store) *Handler {
 	}
 
 	handler.Use(middleware.Logger)
-
 	handler.Get("/users/{id}", handler.GetUser())
 	handler.Post("/users", handler.CreateUser())
 	handler.Put("/users/{id}", handler.UpdateUser())
 	handler.Delete("/users/{id}", handler.DeleteUser())
 	handler.Get("/users/username/{username}", handler.GetUserByUsername())
 	handler.Get("/users/email/{email}", handler.GetUserByEmail())
+	handler.Post("/salon", handler.CreateSalon())
 
 	return handler
 
