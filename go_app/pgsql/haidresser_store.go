@@ -41,3 +41,29 @@ func (s *HairdresserStore) GetHairdresser(id int64) (*coifResa.HairdresserItem, 
 
 	return hairdresser, nil
 }
+
+func (s *HairdresserStore) GetHairdressersBySalonId(salonId int64) ([]*coifResa.HairdresserItem, error) {
+	rows, err := s.Query(`
+    SELECT id, name, salon_id FROM haidressers WHERE salon_id = $1
+    `, salonId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get haidresser with salon id %d: %w", salonId, err)
+	}
+	defer rows.Close()
+
+	var hairdressers []*coifResa.HairdresserItem
+	for rows.Next() {
+		hairdresser := &coifResa.HairdresserItem{}
+		err := rows.Scan(&hairdresser.ID, &hairdresser.Name, &hairdresser.SalonId)
+		if err != nil {
+			return nil, err
+		}
+		hairdressers = append(hairdressers, hairdresser)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return hairdressers, nil
+}
