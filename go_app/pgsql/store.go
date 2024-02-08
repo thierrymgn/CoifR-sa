@@ -11,10 +11,12 @@ func CreateStore(db *sql.DB) *Store {
 	return &Store{
 		NewUserStore(db),
 		NewSalonStore(db),
+		NewHaidresserStore(db),
 	}
 }
 
 type Store struct {
 	coifResa.UserStoreInterface
 	coifResa.SalonStoreInterface
+	coifResa.HairdresserStoreInterface
 }

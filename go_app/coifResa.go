@@ -37,11 +37,21 @@ type SalonItem struct {
 	Email       string `json:"email"`
 	Address     string `json:"address"`
 	City        string `json:"city"`
-	PosalCode   string `json:"postal_code"`
+	PostalCode  string `json:"postal_code"`
 	Description string `json:"description"`
 	UserId      int64  `json:"user_id"`
 }
 
 type SalonStoreInterface interface {
 	CreateSalon(salon *SalonItem) error
+}
+
+type HairdresserItem struct {
+	ID      int64  `json:"id"`
+	Name    string `json:"name"`
+	SalonId int64  `json:"salon_id"`
+}
+
+type HairdresserStoreInterface interface {
+	CreateHairdresser(hairdresser *HairdresserItem) error
 }
