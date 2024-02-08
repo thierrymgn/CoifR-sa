@@ -25,6 +25,7 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Post("/salons", handler.CreateSalon())
 	/* HAIRDRESSER */
 	handler.Post("/hairdressers", handler.CreateHairdresser())
+	handler.Get("/hairdressers/{id}", handler.GetHairdresser())
 
 	return handler
 

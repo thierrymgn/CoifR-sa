@@ -27,3 +27,17 @@ func (s *HairdresserStore) CreateHairdresser(hairdresser *coifResa.HairdresserIt
 
 	return nil
 }
+
+func (s *HairdresserStore) GetHairdresser(id int64) (*coifResa.HairdresserItem, error) {
+	hairdresser := &coifResa.HairdresserItem{}
+
+	err := s.QueryRow(`
+	SELECT id, name, salon_id FROM haidressers WHERE id = $1
+	`, id).Scan(&hairdresser.ID, &hairdresser.Name, &hairdresser.SalonId)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to get haidresser with id %d: %w", id, err)
+	}
+
+	return hairdresser, nil
+}
