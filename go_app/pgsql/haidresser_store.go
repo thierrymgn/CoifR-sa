@@ -67,3 +67,14 @@ func (s *HairdresserStore) GetHairdressersBySalonId(salonId int64) ([]*coifResa.
 
 	return hairdressers, nil
 }
+
+func (s *HairdresserStore) UpdateHairdresser(hairdresser *coifResa.HairdresserItem) error {
+	_, err := s.Exec(`
+	UPDATE haidressers SET name = $1, salon_id = $2 WHERE id = $3
+	`, hairdresser.Name, hairdresser.SalonId, hairdresser.ID)
+	if err != nil {
+		return fmt.Errorf("failed to update haidresser with id %d: %w", hairdresser.ID, err)
+	}
+
+	return nil
+}
