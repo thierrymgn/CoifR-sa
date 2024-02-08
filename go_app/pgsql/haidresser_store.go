@@ -78,3 +78,14 @@ func (s *HairdresserStore) UpdateHairdresser(hairdresser *coifResa.HairdresserIt
 
 	return nil
 }
+
+func (s *HairdresserStore) DeleteHairdresser(id int64) error {
+	_, err := s.Exec(`
+	DELETE FROM haidressers WHERE id = $1
+	`, id)
+	if err != nil {
+		return fmt.Errorf("failed to delete haidresser with id %d: %w", id, err)
+	}
+
+	return nil
+}

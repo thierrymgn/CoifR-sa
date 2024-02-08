@@ -57,4 +57,5 @@ type HairdresserStoreInterface interface {
 	GetHairdresser(id int64) (*HairdresserItem, error)
 	GetHairdressersBySalonId(salonId int64) ([]*HairdresserItem, error)
 	UpdateHairdresser(hairdresser *HairdresserItem) error
+	DeleteHairdresser(id int64) error
 }
