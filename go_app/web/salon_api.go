@@ -64,3 +64,26 @@ func (h *Handler) GetSalon() http.HandlerFunc {
 		}
 	}
 }
+
+func (h *Handler) GetSalonsByUserId() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userId, err := strconv.ParseInt(chi.URLParam(r, "userId"), 10, 64)
+		if err != nil {
+			http.Error(w, "invalid user id", http.StatusBadRequest)
+			return
+		}
+
+		salons, err := h.Store.GetSalonsByUserId(userId)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		err = json.NewEncoder(w).Encode(salons)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+}
