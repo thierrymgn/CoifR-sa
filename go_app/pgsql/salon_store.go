@@ -75,3 +75,15 @@ func (s *SalonStore) UpdateSalon(salon *coifResa.SalonItem) error {
 
 	return nil
 }
+
+func (s *SalonStore) DeleteSalon(id int64) error {
+	_, err := s.Exec(`
+	DELETE FROM salons WHERE id = $1
+	`, id)
+
+	if err != nil {
+		return fmt.Errorf("failed to delete salon with id %d: %w", id, err)
+	}
+
+	return nil
+}
