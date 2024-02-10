@@ -37,6 +37,7 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Delete("/slots/{id}", handler.DeleteSlot())
 	/* RESERVATION */
 	handler.Post("/reservations", handler.CreateReservation())
+	handler.Get("/reservations/{id}", handler.GetReservation())
 
 	return handler
 

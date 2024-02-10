@@ -27,3 +27,17 @@ func (s *ReservationStore) CreateReservation(reservation *coifResa.ReservationIt
 
 	return nil
 }
+
+func (s *ReservationStore) GetReservation(id int64) (*coifResa.ReservationItem, error) {
+	reservation := &coifResa.ReservationItem{}
+
+	err := s.QueryRow(`
+		SELECT id, user_id, slot_id FROM reservations WHERE id = $1
+	`, id).Scan(&reservation.ID, &reservation.UserId, &reservation.SlotId)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to get reservation with id %d: %w", id, err)
+	}
+
+	return reservation, nil
+}
