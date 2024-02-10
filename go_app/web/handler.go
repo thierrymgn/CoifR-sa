@@ -32,6 +32,7 @@ func NewHandler(store *database.Store) *Handler {
 	/* SLOT */
 	handler.Post("/slots", handler.CreateSlot())
 	handler.Get("/slots/{id}", handler.GetSlot())
+	handler.Get("/slots/hairdresser/{hairdresserId}", handler.GetSlotsByHairdresserId())
 
 	return handler
 

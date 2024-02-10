@@ -41,3 +41,25 @@ func (s *SlotStore) GetSlot(id int64) (*coifResa.SlotItem, error) {
 
 	return slot, nil
 }
+
+func (s *SlotStore) GetSlotsByHairdresserId(hairdresserId int64) ([]*coifResa.SlotItem, error) {
+	rows, err := s.Query(`
+	SELECT id, start_time, end_time, hairdresser_id FROM slots WHERE hairdresser_id = $1
+	`, hairdresserId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get slot with hairdresser id %d: %w", hairdresserId, err)
+	}
+	defer rows.Close()
+
+	var slots []*coifResa.SlotItem
+	for rows.Next() {
+		slot := &coifResa.SlotItem{}
+		err := rows.Scan(&slot.ID, &slot.StartTime, &slot.EndTime, &slot.HairdresserId)
+		if err != nil {
+			return nil, err
+		}
+		slots = append(slots, slot)
+	}
+
+	return slots, nil
+}

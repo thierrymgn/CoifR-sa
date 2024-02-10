@@ -72,4 +72,5 @@ type SlotItem struct {
 type SlotStoreInterface interface {
 	CreateSlot(slot *SlotItem) error
 	GetSlot(id int64) (*SlotItem, error)
+	GetSlotsByHairdresserId(hairdresserId int64) ([]*SlotItem, error)
 }
