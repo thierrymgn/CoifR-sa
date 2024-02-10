@@ -1,5 +1,7 @@
 package coifResa
 
+import "time"
+
 // import "embed"
 
 // //go:embed templates/*
@@ -58,4 +60,15 @@ type HairdresserStoreInterface interface {
 	GetHairdressersBySalonId(salonId int64) ([]*HairdresserItem, error)
 	UpdateHairdresser(hairdresser *HairdresserItem) error
 	DeleteHairdresser(id int64) error
+}
+
+type SlotItem struct {
+	ID            int64     `json:"id"`
+	StartTime     time.Time `json:"start_time"`
+	EndTime       time.Time `json:"end_time"`
+	HairdresserId int64     `json:"hairdresser_id"`
+}
+
+type SlotStoreInterface interface {
+	CreateSlot(slot *SlotItem) error
 }
