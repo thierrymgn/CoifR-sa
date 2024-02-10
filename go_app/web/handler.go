@@ -23,6 +23,7 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Get("/users/email/{email}", handler.GetUserByEmail())
 	/* SALON */
 	handler.Post("/salons", handler.CreateSalon())
+	handler.Get("/salons/{id}", handler.GetSalon())
 	/* HAIRDRESSER */
 	handler.Post("/hairdressers", handler.CreateHairdresser())
 	handler.Get("/hairdressers/{id}", handler.GetHairdresser())

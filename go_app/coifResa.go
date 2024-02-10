@@ -46,6 +46,7 @@ type SalonItem struct {
 
 type SalonStoreInterface interface {
 	CreateSalon(salon *SalonItem) error
+	GetSalon(id int64) (*SalonItem, error)
 }
 
 type HairdresserItem struct {

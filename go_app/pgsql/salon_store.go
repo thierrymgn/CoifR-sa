@@ -27,3 +27,17 @@ func (s *SalonStore) CreateSalon(salon *coifResa.SalonItem) error {
 
 	return nil
 }
+
+func (s *SalonStore) GetSalon(id int64) (*coifResa.SalonItem, error) {
+	salon := &coifResa.SalonItem{}
+
+	err := s.QueryRow(`
+		SELECT id, name, email, address, city, postal_code, description, user_id FROM salons WHERE id = $1
+	`, id).Scan(&salon.ID, &salon.Name, &salon.Email, &salon.Address, &salon.City, &salon.PostalCode, &salon.Description, &salon.UserId)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to get salon with id %d: %w", id, err)
+	}
+
+	return salon, nil
+}

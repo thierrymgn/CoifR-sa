@@ -4,6 +4,9 @@ import (
 	"coifResa"
 	"encoding/json"
 	"net/http"
+	"strconv"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func (h *Handler) CreateSalon() http.HandlerFunc {
@@ -32,6 +35,29 @@ func (h *Handler) CreateSalon() http.HandlerFunc {
 			Message: "Salon créé avec succès",
 			Salon:   salon,
 		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+}
+
+func (h *Handler) GetSalon() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+		if err != nil {
+			http.Error(w, "invalid id", http.StatusBadRequest)
+			return
+		}
+
+		salon, err := h.Store.GetSalon(id)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		err = json.NewEncoder(w).Encode(salon)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
