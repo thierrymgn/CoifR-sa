@@ -48,6 +48,7 @@ type SalonStoreInterface interface {
 	CreateSalon(salon *SalonItem) error
 	GetSalon(id int64) (*SalonItem, error)
 	GetSalonsByUserId(userId int64) ([]*SalonItem, error)
+	UpdateSalon(salon *SalonItem) error
 }
 
 type HairdresserItem struct {
