@@ -63,3 +63,15 @@ func (s *ReservationStore) GetReservationsByUserId(userId int64) ([]*coifResa.Re
 
 	return reservations, nil
 }
+
+func (s *ReservationStore) DeleteReservation(id int64) error {
+	_, err := s.Exec(`
+	DELETE FROM reservations WHERE id = $1
+	`, id)
+
+	if err != nil {
+		return fmt.Errorf("failed to delete reservation with id %d: %w", id, err)
+	}
+
+	return nil
+}
