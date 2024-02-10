@@ -31,6 +31,7 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Delete("/hairdressers/{id}", handler.DeleteHairdresser())
 	/* SLOT */
 	handler.Post("/slots", handler.CreateSlot())
+	handler.Get("/slots/{id}", handler.GetSlot())
 
 	return handler
 
