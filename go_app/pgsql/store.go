@@ -13,6 +13,7 @@ func CreateStore(db *sql.DB) *Store {
 		NewSalonStore(db),
 		NewHaidresserStore(db),
 		NewSlotStore(db),
+		NewReservationStore(db),
 	}
 }
 
@@ -21,4 +22,5 @@ type Store struct {
 	coifResa.SalonStoreInterface
 	coifResa.HairdresserStoreInterface
 	coifResa.SlotStoreInterface
+	coifResa.ReservationStoreInterface
 }

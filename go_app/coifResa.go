@@ -76,3 +76,16 @@ type SlotStoreInterface interface {
 	UpdateSlot(slot *SlotItem) error
 	DeleteSlot(id int64) error
 }
+
+type ReservationItem struct {
+	ID     int64 `json:"id"`
+	UserId int64 `json:"user_id"`
+	SlotId int64 `json:"slot_id"`
+}
+
+type ReservationStoreInterface interface {
+	CreateReservation(reservation *ReservationItem) error
+	GetReservation(id int64) (*ReservationItem, error)
+	GetReservationsByUserId(userId int64) ([]*ReservationItem, error)
+	DeleteReservation(id int64) error
+}
