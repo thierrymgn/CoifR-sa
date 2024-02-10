@@ -74,4 +74,5 @@ type SlotStoreInterface interface {
 	GetSlot(id int64) (*SlotItem, error)
 	GetSlotsByHairdresserId(hairdresserId int64) ([]*SlotItem, error)
 	UpdateSlot(slot *SlotItem) error
+	DeleteSlot(id int64) error
 }

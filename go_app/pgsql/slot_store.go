@@ -75,3 +75,15 @@ func (s *SlotStore) UpdateSlot(slot *coifResa.SlotItem) error {
 
 	return nil
 }
+
+func (s *SlotStore) DeleteSlot(id int64) error {
+	_, err := s.Exec(`
+	DELETE FROM slots WHERE id = $1
+	`, id)
+
+	if err != nil {
+		return fmt.Errorf("failed to delete slot with id %d: %w", id, err)
+	}
+
+	return nil
+}
