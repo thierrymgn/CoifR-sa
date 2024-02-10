@@ -41,3 +41,25 @@ func (s *ReservationStore) GetReservation(id int64) (*coifResa.ReservationItem, 
 
 	return reservation, nil
 }
+
+func (s *ReservationStore) GetReservationsByUserId(userId int64) ([]*coifResa.ReservationItem, error) {
+	rows, err := s.Query(`
+	SELECT id, user_id, slot_id FROM reservations WHERE user_id = $1
+	`, userId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get reservation with user id %d: %w", userId, err)
+	}
+	defer rows.Close()
+
+	var reservations []*coifResa.ReservationItem
+	for rows.Next() {
+		reservation := &coifResa.ReservationItem{}
+		err := rows.Scan(&reservation.ID, &reservation.UserId, &reservation.SlotId)
+		if err != nil {
+			return nil, err
+		}
+		reservations = append(reservations, reservation)
+	}
+
+	return reservations, nil
+}
