@@ -90,9 +90,11 @@ func (h *Handler) GetHairdressersBySalonId() http.HandlerFunc {
 
 func (h *Handler) UpdateHairdresser() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		hairdresser := &coifResa.HairdresserItem{}
+		hairdresserId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 
-		err := json.NewDecoder(r.Body).Decode(hairdresser)
+		hairdresser := &coifResa.HairdresserItem{ID: hairdresserId}
+
+		err = json.NewDecoder(r.Body).Decode(hairdresser)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return

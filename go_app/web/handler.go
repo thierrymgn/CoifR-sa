@@ -46,7 +46,6 @@ func NewHandler(store *database.Store) *Handler {
 	handler.Delete("/reservations/{id}", handler.DeleteReservation())
 
 	return handler
-
 }
 
 type Handler struct {
