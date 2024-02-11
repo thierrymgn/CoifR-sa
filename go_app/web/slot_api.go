@@ -88,9 +88,11 @@ func (h *Handler) GetSlotsByHairdresserId() http.HandlerFunc {
 
 func (h *Handler) UpdateSlot() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		slot := &coifResa.SlotItem{}
+		slotId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 
-		err := json.NewDecoder(r.Body).Decode(slot)
+		slot := &coifResa.SlotItem{ID: slotId}
+
+		err = json.NewDecoder(r.Body).Decode(slot)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return

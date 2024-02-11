@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func NewHairdresserstore(db *sql.DB) *HairdresserStore {
+func NewHairdresserStore(db *sql.DB) *HairdresserStore {
 	return &HairdresserStore{
 		db,
 	}

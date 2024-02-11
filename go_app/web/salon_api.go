@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -59,6 +60,10 @@ func (h *Handler) GetSalon() http.HandlerFunc {
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(salon)
 		if err != nil {
+			if strings.Contains(err.Error(), "no salon with id") {
+				http.Error(w, err.Error(), http.StatusNotFound)
+				return
+			}
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -90,9 +95,16 @@ func (h *Handler) GetSalonsByUserId() http.HandlerFunc {
 
 func (h *Handler) UpdateSalon() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		salon := &coifResa.SalonItem{}
+		salonId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 
-		err := json.NewDecoder(r.Body).Decode(salon)
+		if err != nil {
+			http.Error(w, "invalid salon id", http.StatusBadRequest)
+			return
+		}
+
+		salon := &coifResa.SalonItem{ID: salonId}
+
+		err = json.NewDecoder(r.Body).Decode(salon)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -131,6 +143,10 @@ func (h *Handler) DeleteSalon() http.HandlerFunc {
 
 		err = h.Store.DeleteSalon(id)
 		if err != nil {
+			if strings.Contains(err.Error(), "no salon with id") {
+				http.Error(w, err.Error(), http.StatusNotFound)
+				return
+			}
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

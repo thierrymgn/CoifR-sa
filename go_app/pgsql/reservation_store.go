@@ -18,7 +18,7 @@ type ReservationStore struct {
 
 func (s *ReservationStore) CreateReservation(reservation *coifResa.ReservationItem) error {
 	err := s.QueryRow(`
-		INSERT INTO reservations (user_id, slot_id) VALUES ($1, $2, $3, $4) RETURNING id
+		INSERT INTO reservations (user_id, slot_id) VALUES ($1, $2) RETURNING id
 	`, reservation.UserId, reservation.SlotId).Scan(&reservation.ID)
 
 	if err != nil {
@@ -32,8 +32,11 @@ func (s *ReservationStore) GetReservation(id int64) (*coifResa.ReservationItem, 
 	reservation := &coifResa.ReservationItem{}
 
 	err := s.QueryRow(`
-		SELECT id, user_id, slot_id FROM reservations WHERE id = $1
-	`, id).Scan(&reservation.ID, &reservation.UserId, &reservation.SlotId)
+        SELECT r.id, r.user_id, r.slot_id, s.start_time, s.end_time, s.hairdresser_id
+        FROM reservations r
+        INNER JOIN slots s ON r.slot_id = s.id
+        WHERE r.id = $1
+    `, id).Scan(&reservation.ID, &reservation.UserId, &reservation.SlotId, &reservation.Slot.StartTime, &reservation.Slot.EndTime, &reservation.Slot.HairdresserId)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to get reservation with id %d: %w", id, err)

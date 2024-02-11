@@ -2,12 +2,6 @@ package coifResa
 
 import "time"
 
-// import "embed"
-
-// //go:embed templates/*
-
-// var EmbedTemplates embed.FS
-
 type UserType string
 
 const (
@@ -82,9 +76,10 @@ type SlotStoreInterface interface {
 }
 
 type ReservationItem struct {
-	ID     int64 `json:"id"`
-	UserId int64 `json:"user_id"`
-	SlotId int64 `json:"slot_id"`
+	ID     int64    `json:"id"`
+	UserId int64    `json:"user_id"`
+	SlotId int64    `json:"slot_id"`
+	Slot   SlotItem `json:"slot"`
 }
 
 type ReservationStoreInterface interface {

@@ -36,7 +36,10 @@ func (s *SalonStore) GetSalon(id int64) (*coifResa.SalonItem, error) {
 	`, id).Scan(&salon.ID, &salon.Name, &salon.Email, &salon.Address, &salon.City, &salon.PostalCode, &salon.Description, &salon.UserId)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to get salon with id %d: %w", id, err)
+		if err == sql.ErrNoRows {
+			return salon, fmt.Errorf("no salon with id %d: %w", salon.ID, err)
+		}
+		return salon, fmt.Errorf("failed to update salon with id %d: %w", salon.ID, err)
 	}
 
 	return salon, nil
@@ -66,10 +69,13 @@ func (s *SalonStore) GetSalonsByUserId(userId int64) ([]*coifResa.SalonItem, err
 
 func (s *SalonStore) UpdateSalon(salon *coifResa.SalonItem) error {
 	_, err := s.Exec(`
-		UPDATE salons SET name = $1, email = $2, address = $3, city = $4, postal_code = $5, description = $6, user_id = $7 WHERE id = $8
-	`, salon.Name, salon.Email, salon.Address, salon.City, salon.PostalCode, salon.Description, salon.UserId, salon.ID)
+		UPDATE salons SET name = $1, email = $2, address = $3, city = $4, postal_code = $5, description = $6 WHERE id = $7
+	`, salon.Name, salon.Email, salon.Address, salon.City, salon.PostalCode, salon.Description, salon.ID)
 
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return fmt.Errorf("no salon with id %d: %w", salon.ID, err)
+		}
 		return fmt.Errorf("failed to update salon with id %d: %w", salon.ID, err)
 	}
 
@@ -82,7 +88,10 @@ func (s *SalonStore) DeleteSalon(id int64) error {
 	`, id)
 
 	if err != nil {
-		return fmt.Errorf("failed to delete salon with id %d: %w", id, err)
+		if err == sql.ErrNoRows {
+			return fmt.Errorf("no salon with id %d: %w", id, err)
+		}
+		return fmt.Errorf("failed to update salon with id %d: %w", id, err)
 	}
 
 	return nil

@@ -11,7 +11,7 @@ func CreateStore(db *sql.DB) *Store {
 	return &Store{
 		NewUserStore(db),
 		NewSalonStore(db),
-		NewHaidresserStore(db),
+		NewHairdresserStore(db),
 		NewSlotStore(db),
 		NewReservationStore(db),
 	}

@@ -66,8 +66,8 @@ func (s *SlotStore) GetSlotsByHairdresserId(hairdresserId int64) ([]*coifResa.Sl
 
 func (s *SlotStore) UpdateSlot(slot *coifResa.SlotItem) error {
 	_, err := s.Exec(`
-	UPDATE slots SET start_time = $1, end_time = $2, hairdresser_id = $3 WHERE id = $4
-	`, slot.StartTime, slot.EndTime, slot.HairdresserId, slot.ID)
+	UPDATE slots SET start_time = $1, end_time = $2 WHERE id = $3
+	`, slot.StartTime, slot.EndTime, slot.ID)
 
 	if err != nil {
 		return fmt.Errorf("failed to update slot with id %d: %w", slot.ID, err)
