@@ -22,7 +22,7 @@ func (s *HairdresserStore) CreateHairdresser(hairdresser *coifResa.HairdresserIt
 	`, hairdresser.Name, hairdresser.SalonId).Scan(&hairdresser.ID)
 
 	if err != nil {
-		return fmt.Errorf("failed to create salon: %w", err)
+		return fmt.Errorf("failed to create haidresser: %w", err)
 	}
 
 	return nil
