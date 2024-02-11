@@ -67,9 +67,11 @@ func (h *Handler) CreateUser() http.HandlerFunc {
 
 func (h *Handler) UpdateUser() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user := &coifResa.UserItem{}
+		userId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 
-		err := json.NewDecoder(r.Body).Decode(user)
+		user := &coifResa.UserItem{ID: userId}
+
+		err = json.NewDecoder(r.Body).Decode(user)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
