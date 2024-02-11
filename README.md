@@ -12,4 +12,5 @@ The aim of this project is to create a reservation solution for hair salons, sim
 
 ## Getting Started
 
-Instructions for setting up the project locally will be provided soon.
+1. copy .env.example to your own .env
+2. run `docker-compose up` to start the project
