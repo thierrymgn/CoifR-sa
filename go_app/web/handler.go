@@ -15,6 +15,7 @@ func NewHandler(store *database.Store) *Handler {
 
 	handler.Use(middleware.Logger)
 	/* USER */
+	handler.Post("/login", handler.Login())
 	handler.Get("/users/{id}", handler.GetUser())
 	handler.Post("/users", handler.CreateUser())
 	handler.Put("/users/{id}", handler.UpdateUser())
