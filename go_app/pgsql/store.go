@@ -10,9 +10,17 @@ import (
 func CreateStore(db *sql.DB) *Store {
 	return &Store{
 		NewUserStore(db),
+		NewSalonStore(db),
+		NewHairdresserStore(db),
+		NewSlotStore(db),
+		NewReservationStore(db),
 	}
 }
 
 type Store struct {
 	coifResa.UserStoreInterface
+	coifResa.SalonStoreInterface
+	coifResa.HairdresserStoreInterface
+	coifResa.SlotStoreInterface
+	coifResa.ReservationStoreInterface
 }
